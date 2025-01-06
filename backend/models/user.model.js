@@ -1,28 +1,21 @@
 import mongoose from "mongoose";
+import validator from "validator";
 
 const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      required: true,
+      required: [true, "Please provide an email address"],
       unique: true,
       validate: [validator.isEmail, "Please provide a valid email address"],
     },
 
     password: {
       type: String,
+      minlenght: 8,
       required: [true, "Please Provide a password"],
     },
-    confirmPassword: {
-      type: String,
-      required: [true, "Please confirm your passsword"],
-      validate: {
-        validator: function (el) {
-          return el === this.password;
-        },
-        message: "Passwords are not same",
-      },
-    },
+
     name: {
       type: String,
       required: [true, "Please provide a name"],
